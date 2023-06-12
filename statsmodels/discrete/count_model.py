@@ -659,7 +659,7 @@ class ZeroInflatedPoisson(GenericZeroInflated):
         w = np.clip(w, np.finfo(float).eps, 1 - np.finfo(float).eps)
         mu = self.model_main.predict(params_main, exog,
             offset=offset)[:, None]
-        result = self.distribution.pmf(y_values, mu, w)
+        result = self.distribution.ppf(y_values, mu, w)
         return result[0] if transform else result
 
     def _predict_var(self, params, mu, prob_infl):
@@ -800,7 +800,7 @@ class ZeroInflatedGeneralizedPoisson(GenericZeroInflated):
         w[w == 1.] = np.nextafter(1, 0)
         mu = self.model_main.predict(params_main, exog,
             exposure=exposure, offset=offset)[:, None]
-        result = self.distribution.pmf(y_values, mu, params_main[-1], p, w)
+        result = self.distribution.ppf(y_values, mu, params_main[-1], p, w)
         return result[0] if transform else result
 
     def _predict_var(self, params, mu, prob_infl):
@@ -917,7 +917,7 @@ class ZeroInflatedNegativeBinomialP(GenericZeroInflated):
         w = np.clip(w, np.finfo(float).eps, 1 - np.finfo(float).eps)
         mu = self.model_main.predict(params_main, exog,
             exposure=exposure, offset=offset)[:, None]
-        result = self.distribution.pmf(y_values, mu, params_main[-1], p, w)
+        result = self.distribution.ppf(y_values, mu, params_main[-1], p, w)
         return result[0] if transform else result
 
     def _predict_var(self, params, mu, prob_infl):
