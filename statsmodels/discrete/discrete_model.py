@@ -4339,6 +4339,8 @@ class NegativeBinomialP(CountModel):
             size, prob = self.convert_params(params, mu)
             return nbinom.pmf(y_values, size[:, None], prob[:, None])
         elif which == 'model':
+            mu = self.predict(params, exog, exposure, offset)
+            size, prob = self.convert_params(params, mu)
             return nbinom.ppf(y_values, size[:, None], prob[:, None])
         else:
             raise ValueError('keyword "which" = %s not recognized' % which)
