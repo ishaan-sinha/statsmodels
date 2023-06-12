@@ -1705,6 +1705,12 @@ class Poisson(CountModel):
                               )[:, None]
             # uses broadcasting
             return stats.poisson._pmf(y_values, mu)
+        elif which == "model":
+            mu = self.predict(params, exog=exog,
+                              exposure=exposure, offset=offset,
+                              )[:, None]
+            # uses broadcasting
+            return stats.poisson._ppf(y_values, mu)
         else:
             raise ValueError('Value of the `which` option is not recognized')
 
